@@ -4,7 +4,7 @@
 function setup(){
   createCanvas(400, 400);
   background(255);
-  balloon("I love keyakizaka46", 100);
+  balloon("I love keyakizaka46", 100) ;
 }
 
 function balloon(t, color){
@@ -14,7 +14,7 @@ function balloon(t, color){
   fill(color);
   noStroke();
   rect(10, 10, w + p * 2, h + p * 2);
-  triangle(0, 15, 10, 20, 10, 10);
+  triangle(0, 10 + h / 2, 10, 15 + h / 2, 10, 5 + h / 2);
   fill(255);
   text(t, p + 10, h + p);
 }
