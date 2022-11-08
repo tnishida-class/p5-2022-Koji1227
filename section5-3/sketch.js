@@ -27,9 +27,6 @@ function isLeapYear(y){
 
 function daysInYear(y){
   // BLANK[1]
-  if(y == true){
-    text('うるう年です', 10, 10);
-  }
 }
 
 function daysInMonth(y, m){
