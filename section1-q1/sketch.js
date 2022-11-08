@@ -10,7 +10,6 @@ function setup(){
   arc(100 + 25, 100, 100, 100, QUARTER_PI * 3 , QUARTER_PI * 3 + PI);
   
   // BLANK[1]
-  fill('#00FF00');
   arc(100 - 25, 100, 100, 100, QUARTER_PI * 3 + HALF_PI , QUARTER_PI * 3 + PI + HALF_PI );
 
   // おまけ：神戸大学のロゴを作りたい人向けに色情報だけ置いておきます
