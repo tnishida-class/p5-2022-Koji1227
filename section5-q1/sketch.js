@@ -4,7 +4,7 @@
 function setup(){
   createCanvas(400, 400);
   background(255);
-  balloon("I love keyakizaka46", 10, 10, '#234567', 255);
+  balloon("I love keyakizaka46", 100, 70, '#234567', 255);
 }
 
 function balloon(t, x, y, backgroundcolor, textcolor){
@@ -13,8 +13,12 @@ function balloon(t, x, y, backgroundcolor, textcolor){
   let p = 2; // これはすき間(padding)
   fill(backgroundcolor);
   noStroke();
-  rect(x, y, w + p * 2, h + p * 2);
-  triangle(0, 10 + h / 2, 10, 15 + h / 2, 10, 5 + h / 2);
+  rect(x + 10, y, w + p * 2, h + p * 2);
+  triangle(x, y + h * 0.5 + p, x + 10, y + h * 0.5 + p - 5, x + 10, y + h * 0.5 + p + 5);
+  stroke(backgroundcolor);
+  noFill();
+  arc(x + 10 + w + p * 2 + 10, y + h * 0.5 + p, 20, 15, PI, PI * 2);
+  arc(x + 10 + w + p * 2 + 30, y + h * 0.5 + p, 20, 15, 0, PI);
   fill(textcolor);
-  text(t, p, h + p);
+  text(t, x + 10 + p, y + h * 0.5 + p);
 }
