@@ -21,14 +21,13 @@ function draw(){
 }
 
 function keyPressed(){
-  if(keyIsDown(" ".charCodeAt(0))){
-    //speed = (speed + 1) % 2;
+  if(keyCode == " ".charCodeAt(0)){
     speed = 1;
   }
 }
 
 function keyReleased(){
-  if(keyIsDown(" ".charCodeAt(0))){
+  if(keyCode == " ".charCodeAt(0)){
     speed = 0;
   }
 }
