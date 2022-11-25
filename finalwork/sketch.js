@@ -9,14 +9,15 @@ let textcolor1;
 let textcolor2;
 let newheight;
 // すべての授業リスト [科目名, 担当教員名, クラスタID]
-let leclist = [
-  ['日本社会文化論', '栢木/辛島', 01],
-  ['日本思想文化論', '昆野', 01],
-  ['日本文化交流論', '寺内', 01],
-  ['日本メディア文化論', '板倉', 01],
-  ['日本歴史文化論', '長', 01],
-  ['東アジア政治社会論', '谷川', 02]
-];
+let leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
+// let leclist = [
+//   ['日本社会文化論', '栢木/辛島', 01],
+//   ['日本思想文化論', '昆野', 01],
+//   ['日本文化交流論', '寺内', 01],
+//   ['日本メディア文化論', '板倉', 01],
+//   ['日本歴史文化論', '長', 01],
+//   ['東アジア政治社会論', '谷川', 02]
+// ];
 let proflist = ["井上", "西谷", "オムニバス", "野谷", "衣笠"];
 // "日本社会文化論", "日本思想文化論", "日本文化交流論", "日本メディア文化論", "日本歴史文化論", "東アジア政治社会論", "オセアニア社会文化論", "北アジア歴史社会論", "東南アジア社会文化論", "東南アジア政治文化論", "環大西洋文化論", 
 // 受けた授業リスト
@@ -54,8 +55,7 @@ function setup(){
 
 function draw(){
   //let p = 10; //すき間の設定
-  console.log(stage);
-  // console.log(leclist.length);
+  console.log(leclist.length);
   if(stage == 1.0){
     // ステージ1・開始前
     background(160, 192, 255);
@@ -234,10 +234,10 @@ function box1(n, textcolor){
   textSize(24);
   textAlign(CENTER);
   if(stage == 1.1 || stage == 1.2 || stage == 1.3){
-    hyoji = leclist[n * 2][0] + "\n（" + leclist[n * 2][1] + "先生）";
+    hyoji = leclist[n * 2] + "\n（" + leclist[n * 2] + "先生）";
   }
   if(stage == 2.1 || stage == 2.2 || stage == 2.3){
-    hyoji = takenlec[n * 2][0] + "\n（" + takenlec[n * 2][1] + "先生）";
+    hyoji = takenlec[n * 2] + "\n（" + takenlec[n * 2] + "先生）";
   }
   text(hyoji, centx, count1 + 100);
 }
@@ -253,10 +253,10 @@ function box2(n, textcolor){
   textSize(24);
   textAlign(CENTER);
   if(stage == 1.1 || stage == 1.2 || stage == 1.3){
-    hyoji = leclist[n * 2 + 1][0] + "\n（" + leclist[n * 2 + 1][1] + "先生）";
+    hyoji = leclist[n * 2 + 1] + "\n（" + leclist[n * 2 + 1] + "先生）";
   }
   if(stage == 2.1 || stage == 2.2 || stage == 2.3){
-    hyoji = takenlec[n * 2 + 1][0] + "\n（" + takenlec[n * 2 + 1][1] + "先生）";
+    hyoji = takenlec[n * 2 + 1] + "\n（" + takenlec[n * 2 + 1] + "先生）";
   }
   text(hyoji, centx, count2 + 100);
 }
@@ -305,7 +305,6 @@ function keyPressed(){
     }
   }
 }
-
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
