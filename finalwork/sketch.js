@@ -8,35 +8,19 @@ let i2;
 let textcolor1;
 let textcolor2;
 let newheight;
-// すべての授業リスト [科目名, 担当教員名, クラスタID]
-let leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
-// let leclist = [
-//   ['日本社会文化論', '栢木/辛島', 01],
-//   ['日本思想文化論', '昆野', 01],
-//   ['日本文化交流論', '寺内', 01],
-//   ['日本メディア文化論', '板倉', 01],
-//   ['日本歴史文化論', '長', 01],
-//   ['東アジア政治社会論', '谷川', 02]
-// ];
-let proflist = ["井上", "西谷", "オムニバス", "野谷", "衣笠"];
-// "日本社会文化論", "日本思想文化論", "日本文化交流論", "日本メディア文化論", "日本歴史文化論", "東アジア政治社会論", "オセアニア社会文化論", "北アジア歴史社会論", "東南アジア社会文化論", "東南アジア政治文化論", "環大西洋文化論", 
+// すべての授業リスト
+let leclist = [];
+let proflist = [];
+let clusterlist = [];
 // 受けた授業リスト
-let takenlec = [];
+let takenlec = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
 let takenprof = [];
+let takencluster = [];
 // 面白かった授業リスト
 let funlec = [];
-let funprof =[];
+let funprof = [];
+let funcluster = [];
 let stage;
-// let lec0 = {
-//   name : "ITコミュニケーションデザイン",
-//   cluster : "ITコミュ"
-// }
-// leclist.push(lec0);
-// let lec1 = {
-//   name : "コミュニケーション表現論",
-//   cluster : "言語コミュ"
-// }
-// leclist.push(lec1);
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
@@ -49,13 +33,14 @@ function setup(){
   i2 = 0;
   textcolor1 = 'black'
   textcolor2 = 'black';
-  stage = 1.0;
+  stage = 2.2;
   newheight = height - 50;
+  listup();
+  console.log(stage);
 }
 
 function draw(){
-  //let p = 10; //すき間の設定
-  console.log(leclist.length);
+  console/log(takenlec);
   if(stage == 1.0){
     // ステージ1・開始前
     background(160, 192, 255);
@@ -130,8 +115,6 @@ function draw(){
     background(160, 192, 255);
     frame('blue');
     explanation();
-    textcolor1 = 'red';
-    textcolor2 = 'red';
     count1 = count1 + speed;
     box1(0, textcolor1);
     if(count1 >= centy){
@@ -185,6 +168,9 @@ function draw(){
       }
     }
   }
+  if(stage == 3.0){
+    // ここに診断結果を表示
+  }
 }
 
 function frame(linecolor){
@@ -234,10 +220,10 @@ function box1(n, textcolor){
   textSize(24);
   textAlign(CENTER);
   if(stage == 1.1 || stage == 1.2 || stage == 1.3){
-    hyoji = leclist[n * 2] + "\n（" + leclist[n * 2] + "先生）";
+    hyoji = leclist[n * 2] + "\n（" + proflist[n * 2] + "先生）";
   }
   if(stage == 2.1 || stage == 2.2 || stage == 2.3){
-    hyoji = takenlec[n * 2] + "\n（" + takenlec[n * 2] + "先生）";
+    hyoji = takenlec[n * 2] + "\n（" + takenprof[n * 2] + "先生）";
   }
   text(hyoji, centx, count1 + 100);
 }
@@ -253,10 +239,10 @@ function box2(n, textcolor){
   textSize(24);
   textAlign(CENTER);
   if(stage == 1.1 || stage == 1.2 || stage == 1.3){
-    hyoji = leclist[n * 2 + 1] + "\n（" + leclist[n * 2 + 1] + "先生）";
+    hyoji = leclist[n * 2 + 1] + "\n（" + proflist[n * 2 + 1] + "先生）";
   }
   if(stage == 2.1 || stage == 2.2 || stage == 2.3){
-    hyoji = takenlec[n * 2 + 1] + "\n（" + takenlec[n * 2 + 1] + "先生）";
+    hyoji = takenlec[n * 2 + 1] + "\n（" + takenprof[n * 2 + 1] + "先生）";
   }
   text(hyoji, centx, count2 + 100);
 }
@@ -265,30 +251,38 @@ function keyPressed(){
   if(keyCode == " ".charCodeAt(0)){
     if(stage == 1.1 || stage == 1.2 || stage == 1.3){
       if(count1 >= centy - 150 && count1 <= centy + 200){
+        if(textcolor1 = 'red'){
+          // もう赤色になっている場合は元に戻す
+          space_push(1, 1, 0, 1);
+        }
         // 色を赤に変えて「受けた授業リスト」にプッシュ
-        textcolor1 = 'red';
-        takenlec.push(leclist[i1 * 2]);
-        //takenprof.push(proflist[i1 * 2]);
+        space_push(1, 1, 0, 0);
       }
       if(count2 >= centy - 150 && count2 <= centy + 200){
+        if(textcolor2 = 'red'){
+          // もう赤色になっている場合は元に戻す
+          space_push(1, 0, 1, 1);
+        }
         // 色を赤に変えて「受けた授業リスト」にプッシュ
-        textcolor2 = 'red';
-        takenlec.push(leclist[i2 * 2 + 1]);
-        //takenprof.push(proflist[i2 * 2 + 1]);
+        space_push(1, 0, 1, 0);
       }
     }
     if(stage == 2.1 || stage == 2.2 || stage == 2.3){
       if(count1 >= centy - 150 && count1 <= centy + 200){
+        if(textcolor1 = 'blue'){
+          // もう青色になっている場合は元に戻す
+          space_push(2, 1, 0, 1);
+        }
         // 色を青に変えて「面白かった授業リスト」にプッシュ
-        textcolor1 = 'blue';
-        funlec.push(takenlec[i1 * 2]);
-        //funprof.push(takenprof[i1 * 2]);
+        space_push(2, 1, 0, 0);
       }
       if(count2 >= centy - 150 && count2 <= centy + 200){
+        if(textcolor2 = 'blue'){
+          // もう青色になっている場合は元に戻す
+          space_push(2, 0, 1 , 1);
+        }
         // 色を青に変えて「面白かった授業リスト」にプッシュ
-        textcolor2 = 'blue';
-        funlec.push(takenlec[i2 * 2 + 1]);
-        //funprof.push(takenprof[i2 * 2 + 1])
+        space_push(2, 0, 1, 0);
       }
     }
   }
@@ -302,6 +296,83 @@ function keyPressed(){
       count2 = 0;
       i1 = 0;
       i2 = 0;
+      textcolor1 = 'red';
+      textcolor2 = 'red';
+    }
+  }
+}
+
+function space_push(a, b, c, d){
+  // a : ステージ（整数値）, b : i1, c : i2, d : 0(追加) or 1(削除) 
+  let color;
+  let n;
+  if(d == 0){
+    if(a == 1){
+      color = 'red';
+    }
+    if(a == 2){
+      color = 'blue';
+    }
+  }
+  if(d == 1){
+    if(a == 1){
+      color = 'black';
+    }
+    if(a == 2){
+      color = 'red';
+    }
+  }
+  if(c == 0){
+    n = b * 2;
+    textcolor1 = color;
+  }
+  if(b == 0){
+    n = c * 2 + 1;
+    textcolor2 = color;
+  }
+  if(d == 0){
+    if(a == 1){
+      takenlec.push(leclist[n]);
+      takenprof.push(proflist[n]);
+      takencluster.push(clusterlist[n]);
+    }
+    if(a == 2){
+      funlec.push(takenlec[n]);
+      funprof.push(takenprof[n]);
+      funcluster.push(takencluster[n]);
+    }
+  }
+  if(d == 1){
+    if(a == 1){
+      takenlec.pop();
+      takenprof.pop();
+      takencluster.pop();
+      if(c == 0){
+        textcolor1 = 'black';
+      }
+      if(b == 0){
+        textcolor2 = 'black';
+      }
+    }
+    if(a == 2){
+      funlec.pop();
+      funprof.pop();
+      funcluster.pop();
+    }
+  }
+}
+
+function listup(){
+  leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
+  proflist = ['栢木/辛島', '昆野', '寺内', '板倉', '長', '谷川'];
+  for(let x = 0; x < 12; x++){
+    for(let y = 0; y < 5; y++){
+      // 基本クラスタあたり5つの授業がある
+      push.clusterlist = x;
+    }
+    if(x == 2 || x == 8){
+      // ヨロアメと芸術文化だけ6つ授業がある
+      push.clusterlist = x;
     }
   }
 }
