@@ -13,14 +13,20 @@ let leclist = [];
 let proflist = [];
 let clusterlist = [];
 // 受けた授業リスト
-let takenlec = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
+let takenlec = [];
 let takenprof = [];
 let takencluster = [];
 // 面白かった授業リスト
 let funlec = [];
 let funprof = [];
 let funcluster = [];
+let redlist = [];
+let bluelist = [];
 let stage;
+let x1;
+let x2;
+let y1;
+let y2;
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
@@ -31,16 +37,15 @@ function setup(){
   speed = 3; // 落ちてくるスピードを調整
   i1 = 0;
   i2 = 0;
-  textcolor1 = 'black'
+  textcolor1 = 'black';
   textcolor2 = 'black';
-  stage = 2.2;
+  stage = 1.0;
   newheight = height - 50;
   listup();
-  console.log(stage);
 }
 
 function draw(){
-  console/log(takenlec);
+  console/log(stage);
   if(stage == 1.0){
     // ステージ1・開始前
     background(160, 192, 255);
@@ -170,6 +175,29 @@ function draw(){
   }
   if(stage == 3.0){
     // ここに診断結果を表示
+    console.log(redlist);
+    for(let t = 0; t < 12; t++){
+      redlist[t] = 0;
+      bluelist[t] = 0;
+    }
+    for(let p = 0; p < takencluster.length; p++){
+      for(let q = 0; q < 12; q++){
+        if(takencluster[p] == q){
+          redlist[q] = redlist[q] + 1;
+        }
+      }
+    }
+    for(let p = 0; p < funcluster.length; p++){
+      for(let q = 0; q < 12; q++){
+        if(funcluster[p] == q){
+          bluelist[q] = bluelist[q] + 1;
+        }
+      }
+    }
+    background(160, 192, 255);
+    explanation();
+    regularPolygon(centx, centy, 50, redlist, 'red');
+    regularPolygon(centx, centy, 50, bluelist, 'blue');
   }
 }
 
@@ -206,6 +234,37 @@ function explanation(){
     textSize(20);
     textAlign(CENTER);
     text("次は，受けた授業のうち，面白かった授業が青の枠内に来たらスペースを押してください。", centx, 50);
+  }
+  if(stage == 3.0){
+    // let list;
+    // for(i = 0; i < 1; i++){
+    //   list = [];
+    //   for(j = 0; j < 12; j++){
+    //     list.push(i + 1);
+    //   }
+    //   regularPolygon(centx, centy, 50, list, 'black');
+    // }
+    regularPolygon(centx, centy, 50, [1,1,1,1,1,1,1,1,1,1,1,1], 'black');
+    regularPolygon(centx, centy, 50, [2,2,2,2,2,2,2,2,2,2,2,2], 'black');
+    regularPolygon(centx, centy, 50, [3,3,3,3,3,3,3,3,3,3,3,3], 'black');
+    regularPolygon(centx, centy, 50, [4,4,4,4,4,4,4,4,4,4,4,4], 'black');
+    regularPolygon(centx, centy, 50, [5,5,5,5,5,5,5,5,5,5,5,5], 'black');
+    regularPolygon(centx, centy, 50, [6,6,6,6,6,6,6,6,6,6,6,6], 'black');
+
+    let x;
+    let y;
+    const cl = ['日本学', 'ｱｼﾞｱ・太平洋文化論', 'ﾖｰﾛｯﾊﾟ・ｱﾒﾘｶ文化論', '異文化関係論', '多文化共生論', '越境文化論', 'ﾓﾀﾞﾆﾃｨ論', '芸術文化論', '先端社会論', '言語ｺﾐｭﾆｹｰｼｮﾝ論', '感性ｺﾐｭﾆｹｰｼｮﾝ論', '情報ｺﾐｭﾆｹｰｼｮﾝ論'];
+    for(i = 0; i < 12; i++){
+      let theta = PI * 2 * i / 12 - HALF_PI;
+      x = centx + cos(theta) * 6 * 50;
+      y = centy + sin(theta) * 6 * 50;
+      textSize(20);
+      textAlign(CENTER);
+      textcolor('black');
+      noStroke();
+      content = cl[i]
+      text(content, x, y);
+    }
   }
 }
 
@@ -347,18 +406,38 @@ function space_push(a, b, c, d){
       takenlec.pop();
       takenprof.pop();
       takencluster.pop();
-      if(c == 0){
-        textcolor1 = 'black';
-      }
-      if(b == 0){
-        textcolor2 = 'black';
-      }
     }
     if(a == 2){
       funlec.pop();
       funprof.pop();
       funcluster.pop();
     }
+  }
+}
+
+function regularPolygon(cx, cy, r, list, color){
+  let n = list.length;
+  let newlist = [];
+  for(j = 0; j < n; j++){
+    newlist.push(list[j] * 50);
+  }
+  for(i = 0; i < n; i++){
+    let theta = TWO_PI * i * 1 / n - HALF_PI;
+    if(i == 0){
+      let theta_n_1 = TWO_PI * (n - 1) * 1 / n - HALF_PI;
+      x1 = cx + cos(theta_n_1) * newlist[n - 1];
+      y1 = cy + sin(theta_n_1) * newlist[n - 1];
+    }
+    if(i == n){
+      x1 = cx + cos(HALF_PI) * newlist[0];
+      y1 = cy + sin(HALF_PI) * newlist[0];
+    }
+    x2 = cx + cos(theta) * newlist[i];
+    y2 = cy + sin(theta) * newlist[i];
+    stroke(color);
+    line(x1, y1, x2, y2);
+    x1 = x2;
+    y1 = y2;
   }
 }
 
@@ -374,6 +453,10 @@ function listup(){
       // ヨロアメと芸術文化だけ6つ授業がある
       push.clusterlist = x;
     }
+  }
+  for(let z = 0; z < 12; z++){
+    redlist.push(0);
+    bluelist.push(0);
   }
 }
 
