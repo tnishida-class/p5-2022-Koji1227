@@ -2,6 +2,7 @@
 let centx;
 let centy;
 let count1;
+let count2;
 let speed;
 let i1;
 let i2;
@@ -45,7 +46,7 @@ function setup(){
 }
 
 function draw(){
-  console/log(stage);
+  // console.log(takenlec);
   if(stage == 1.0){
     // ステージ1・開始前
     background(160, 192, 255);
@@ -96,7 +97,10 @@ function draw(){
     frame('red');
     explanation();
     if(i1 * 2 >= leclist.length){
+      // count1 = count1 + speed;
       count2 = count2 + speed;
+      // count1 = count1 % newheight;
+      // count2 = count2 % newheight;
       box2(i2, textcolor2);
       if(count2 >= newheight){
         stage = 2.0;
@@ -104,6 +108,9 @@ function draw(){
     }
     if(i2 * 2 + 1 >= leclist.length){
       count1 = count1 + speed;
+      // count2 = count2 + speed;
+      // count1 = count1 % newheight;
+      // count2 = count2 % newheight;
       box1(i1, textcolor1);
       if(count1 >= newheight){
         stage = 2.0;
@@ -176,9 +183,11 @@ function draw(){
   if(stage == 3.0){
     // ここに診断結果を表示
     console.log(redlist);
+    redlist = [];
+    bluelist = [];
     for(let t = 0; t < 12; t++){
-      redlist[t] = 0;
-      bluelist[t] = 0;
+      push.redlist(0);
+      push.bluelist(0);
     }
     for(let p = 0; p < takencluster.length; p++){
       for(let q = 0; q < 12; q++){
@@ -260,7 +269,7 @@ function explanation(){
       y = centy + sin(theta) * 6 * 50;
       textSize(20);
       textAlign(CENTER);
-      textcolor('black');
+      fill('black');
       noStroke();
       content = cl[i]
       text(content, x, y);
@@ -312,36 +321,36 @@ function keyPressed(){
       if(count1 >= centy - 150 && count1 <= centy + 200){
         if(textcolor1 = 'red'){
           // もう赤色になっている場合は元に戻す
-          space_push(1, 1, 0, 1);
+          // space_push(1, i1, 0, 1);
         }
         // 色を赤に変えて「受けた授業リスト」にプッシュ
-        space_push(1, 1, 0, 0);
+        space_push(1, i1, 'i1');
       }
       if(count2 >= centy - 150 && count2 <= centy + 200){
         if(textcolor2 = 'red'){
           // もう赤色になっている場合は元に戻す
-          space_push(1, 0, 1, 1);
+          // space_push(1, 0, i2, 1);
         }
         // 色を赤に変えて「受けた授業リスト」にプッシュ
-        space_push(1, 0, 1, 0);
+        space_push(1, i2, 'i2');
       }
     }
     if(stage == 2.1 || stage == 2.2 || stage == 2.3){
       if(count1 >= centy - 150 && count1 <= centy + 200){
         if(textcolor1 = 'blue'){
           // もう青色になっている場合は元に戻す
-          space_push(2, 1, 0, 1);
+          // space_push(2, i1, 0, 1);
         }
         // 色を青に変えて「面白かった授業リスト」にプッシュ
-        space_push(2, 1, 0, 0);
+        space_push(2, i1, 'i1');
       }
       if(count2 >= centy - 150 && count2 <= centy + 200){
         if(textcolor2 = 'blue'){
           // もう青色になっている場合は元に戻す
-          space_push(2, 0, 1 , 1);
+          // space_push(2, 0, i2, 1);
         }
         // 色を青に変えて「面白かった授業リスト」にプッシュ
-        space_push(2, 0, 1, 0);
+        space_push(2, i2, 'i2');
       }
     }
   }
@@ -361,58 +370,61 @@ function keyPressed(){
   }
 }
 
-function space_push(a, b, c, d){
-  // a : ステージ（整数値）, b : i1, c : i2, d : 0(追加) or 1(削除) 
+function space_push(a, b, c){
+  // a : ステージ（整数値）, b : i1 or i2, c : i1かi2かの指標
   let color;
   let n;
-  if(d == 0){
-    if(a == 1){
+  if(a == 1){
       color = 'red';
-    }
-    if(a == 2){
-      color = 'blue';
-    }
   }
-  if(d == 1){
-    if(a == 1){
-      color = 'black';
+  // if(c == 0){
+  //   n = b * 2;
+  //   textcolor1 = color;
+  // }
+  // if(b == 0){
+  //   n = c * 2 + 1;
+  //   textcolor2 = color;
+  // }
+  if (a == 1) {
+    color = 'red';
+    if (c == 'i1') {
+      n = b * 2;
+      textcolor1 = color;
     }
-    if(a == 2){
-      color = 'red';
+    if (c == 'i2') {
+      n = b * 2 + 1;
+      textcolor2 = color;
     }
+    takenlec.push(leclist[n]);
+    takenprof.push(proflist[n]);
+    takencluster.push(clusterlist[n]);
   }
-  if(c == 0){
-    n = b * 2;
-    textcolor1 = color;
-  }
-  if(b == 0){
-    n = c * 2 + 1;
-    textcolor2 = color;
-  }
-  if(d == 0){
-    if(a == 1){
-      takenlec.push(leclist[n]);
-      takenprof.push(proflist[n]);
-      takencluster.push(clusterlist[n]);
+  if (a == 2) {
+    color = 'blue';
+    if (c == 'i1') {
+      n = b * 2;
+      textcolor1 = color;
     }
-    if(a == 2){
-      funlec.push(takenlec[n]);
-      funprof.push(takenprof[n]);
-      funcluster.push(takencluster[n]);
+    if (c == 'i2') {
+      n = b * 2 + 1;
+      textcolor2 = color;
     }
+    funlec.push(takenlec[n]);
+    funprof.push(takenprof[n]);
+    funcluster.push(takencluster[n]);
   }
-  if(d == 1){
-    if(a == 1){
-      takenlec.pop();
-      takenprof.pop();
-      takencluster.pop();
-    }
-    if(a == 2){
-      funlec.pop();
-      funprof.pop();
-      funcluster.pop();
-    }
-  }
+  // if(d == 1){
+  //   if(a == 1){
+  //     //takenlec.pop();
+  //     takenprof.pop();
+  //     takencluster.pop();
+  //   }
+  //   if(a == 2){
+  //     funlec.pop();
+  //     funprof.pop();
+  //     funcluster.pop();
+  //   }
+  // }
 }
 
 function regularPolygon(cx, cy, r, list, color){
