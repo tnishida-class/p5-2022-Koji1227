@@ -10,8 +10,8 @@ let textcolor1;
 let textcolor2;
 let newheight;
 // すべての授業リスト
-let leclist = [];
-let proflist = [];
+let leclist;
+let proflist;
 let clusterlist = [];
 // 受けた授業リスト
 let takenlec = [];
@@ -23,6 +23,7 @@ let funprof = [];
 let funcluster = [];
 let redlist = [];
 let bluelist = [];
+let cl;
 let stage;
 let x1;
 let x2;
@@ -35,7 +36,7 @@ function setup(){
   centy = height / 2;
   count1 = 0;
   count2 = 0;
-  speed = 3; // 落ちてくるスピードを調整
+  speed = 5; // 落ちてくるスピードを調整
   i1 = 0;
   i2 = 0;
   textcolor1 = 'black';
@@ -182,12 +183,11 @@ function draw(){
   }
   if(stage == 3.0){
     // ここに診断結果を表示
-    console.log(redlist);
-    redlist = [];
-    bluelist = [];
+    // console.log(redlist);
+    background(160, 192, 255);
     for(let t = 0; t < 12; t++){
-      push.redlist(0);
-      push.bluelist(0);
+      redlist[t] = 0;
+      bluelist[t] = 0;
     }
     for(let p = 0; p < takencluster.length; p++){
       for(let q = 0; q < 12; q++){
@@ -203,7 +203,38 @@ function draw(){
         }
       }
     }
-    background(160, 192, 255);
+    let point = [];
+    for(let i = 0; i < 12; i++){
+      point.push(redlist[i] + bluelist[i] * 2);
+    }
+    let highest = 0;
+    let highcl = [];
+    console.log(point);
+    for(let i = 0; i < 12; i++){
+      if(highest < point[i]){
+        highest = point[i];
+      }
+    }
+    for(i = 0; i < 12; i++){
+      if(point[i] == highest){
+        highcl.push(i);
+      }
+    }
+    console.log(highest);
+    console.log(highcl.length);
+    if(highcl.length == 1){
+      let highcl_no = highcl[0];
+      let content = 'あなたのオススメクラスタは' + cl[highcl_no] + 'です！';
+      textAlign(CENTER);
+      textSize(25);
+      text(content, centx, 40);
+    }
+    else {
+      textAlign(CENTER);
+      textSize(25);
+      text('あなたはバランス型です！', centx, 20);
+    }
+
     explanation();
     regularPolygon(centx, centy, 50, redlist, 'red');
     regularPolygon(centx, centy, 50, bluelist, 'blue');
@@ -262,7 +293,7 @@ function explanation(){
 
     let x;
     let y;
-    const cl = ['日本学', 'ｱｼﾞｱ・太平洋文化論', 'ﾖｰﾛｯﾊﾟ・ｱﾒﾘｶ文化論', '異文化関係論', '多文化共生論', '越境文化論', 'ﾓﾀﾞﾆﾃｨ論', '芸術文化論', '先端社会論', '言語ｺﾐｭﾆｹｰｼｮﾝ論', '感性ｺﾐｭﾆｹｰｼｮﾝ論', '情報ｺﾐｭﾆｹｰｼｮﾝ論'];
+    // const cl = ['日本学', 'ｱｼﾞｱ・太平洋文化論', 'ﾖｰﾛｯﾊﾟ・ｱﾒﾘｶ文化論', '異文化関係論', '多文化共生論', '越境文化論', 'ﾓﾀﾞﾆﾃｨ論', '芸術文化論', '先端社会論', '言語ｺﾐｭﾆｹｰｼｮﾝ論', '感性ｺﾐｭﾆｹｰｼｮﾝ論', '情報ｺﾐｭﾆｹｰｼｮﾝ論'];
     for(i = 0; i < 12; i++){
       let theta = PI * 2 * i / 12 - HALF_PI;
       x = centx + cos(theta) * 6 * 50;
@@ -374,9 +405,6 @@ function space_push(a, b, c){
   // a : ステージ（整数値）, b : i1 or i2, c : i1かi2かの指標
   let color;
   let n;
-  if(a == 1){
-      color = 'red';
-  }
   // if(c == 0){
   //   n = b * 2;
   //   textcolor1 = color;
@@ -385,7 +413,7 @@ function space_push(a, b, c){
   //   n = c * 2 + 1;
   //   textcolor2 = color;
   // }
-  if (a == 1) {
+  if(a == 1){
     color = 'red';
     if (c == 'i1') {
       n = b * 2;
@@ -454,22 +482,23 @@ function regularPolygon(cx, cy, r, list, color){
 }
 
 function listup(){
-  leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論'];
-  proflist = ['栢木/辛島', '昆野', '寺内', '板倉', '長', '谷川'];
+  leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論', 'オセアニア社会文化論', '北アジア歴史社会論', '東南アジア社会文化論', '東南アジア政治文化論', '環大西洋文化論', 'アメリカ社会論', 'アメリカ文化論', '英米テクスト文化論', '宗教文化論', 'ヨーロッパ社会文化論', '文化人類学', '現代社会人類学', '現代民族誌学', '比較民族学', '文化混交論', '越境文化形成論', '科学技術文明論', '比較文化論', '文化翻訳論', '越境社会文化論', '国際関係論', '多文化政治社会論', '比較政策論', '比較政治社会論', '平和構築論', '近現代社会思想論', '近現代文化言説論', '近現代表象文化論', '近現代経済思想論', '近現代政治思想論', '現代社会理論', 'グローバル正義論', 'ジェンダー社会文化論', 'メディア社会文化論', '現代規範論', '文化政策論', '近現代アート論', '芸術文化表象論', '視覚文化論', '表象文化形成論', '芸術文化環境論', '第二言語習得論', '言語機能論', 'コミュニケーション表現論', '翻訳コミュニケーション論', 'グローバル・イングリッシュ・ヒストリー', '非言語コミュニケーション論', '音声コミュニケーション論', 'コミュニケーション構造論', 'コミュニケーション比較論', '認知コミュニケーション論', '現代IT入門', 'ITコミュニケーションデザイン', '社会システム科学', 'データマネージメント', '統計情報処理'];
+  proflist = ['辛島/栢木', '昆野', '寺内', '板倉', '長', '谷川', '深川/平野', '池尻/萩原', '伊藤', '貞好', '小澤', '井上', '西谷', '松家・西谷・深町/野谷', '野谷', '衣笠/坂本', '大石', '石田(慎)/梅屋', '下條', '岡田', '齋藤', '田中(祐)','塚原', '深町/遠田', '北村', '近藤', '宮脇/坂井', '新川', '安岡', '李/阪野', '中村', '鹿野', '石田(圭)', '松家', '市田', '上野', '西澤','櫻井', '青山', '小笠原', '工藤', '藤野', '池上', '上畑/岡本', '蟻谷/井口', '岩本', '高田', '田中(順)', '石田(雄)', '小松原', '藤濤', '西村', '北田', '水口', '南本', '巽', '松本', '大月/森下', '西田', '村尾', '清光', '康'];
   for(let x = 0; x < 12; x++){
     for(let y = 0; y < 5; y++){
       // 基本クラスタあたり5つの授業がある
-      push.clusterlist = x;
+      clusterlist.push(x);
     }
     if(x == 2 || x == 8){
       // ヨロアメと芸術文化だけ6つ授業がある
-      push.clusterlist = x;
+      clusterlist.push(x);
     }
   }
-  for(let z = 0; z < 12; z++){
+  for(let t = 0; t < 12; t++){
     redlist.push(0);
-    bluelist.push(0);
+    bluelist.push(0);  
   }
+  cl = ['日本学', 'ｱｼﾞｱ・太平洋文化論', 'ﾖｰﾛｯﾊﾟ・ｱﾒﾘｶ文化論', '異文化関係論', '多文化共生論', '越境文化論', 'ﾓﾀﾞﾆﾃｨ論', '芸術文化論', '先端社会論', '言語ｺﾐｭﾆｹｰｼｮﾝ論', '感性ｺﾐｭﾆｹｰｼｮﾝ論', '情報ｺﾐｭﾆｹｰｼｮﾝ論'];
 }
 
 function windowResized(){
