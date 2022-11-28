@@ -37,7 +37,7 @@ function setup(){
   centy = height / 2;
   count1 = 0;
   count2 = 0;
-  speed = 8; // 落ちてくるスピードを調整
+  speed = 3; // 落ちてくるスピードを調整
   i1 = 0;
   i2 = 0;
   textcolor1 = 'black';
@@ -48,11 +48,14 @@ function setup(){
 }
 
 function draw(){
+  // ステージ1: 受けた授業を選ぶ
+  // ステージ1.0: 開始前
   if(stage == 1.0){
     background(160, 192, 255);
     frame('red');
     explanation();
   }
+  // ステージ1.1: 序盤
   if(stage == 1.1){
     background(160, 192, 255);
     frame('red');
@@ -63,6 +66,7 @@ function draw(){
       stage = 1.2;
     }
   }
+  // ステージ1.2: メイン
   if(stage == 1.2){
     count1 = count1 + speed;
     count2 = count2 + speed;
@@ -85,6 +89,7 @@ function draw(){
       stage = 1.3
     }
   }
+  // ステージ1.3: 終盤
   if(stage == 1.3){
     background(160, 192, 255);
     frame('red');
@@ -104,11 +109,14 @@ function draw(){
       }
     }
   }
+  // ステージ2: 面白かった授業を選ぶ
+  // ステージ2.0: 開始前
   if(stage == 2.0){
     background(160, 192, 255);
     frame('blue');
     explanation();
   }
+  // ステージ2.1: 序盤
   if(stage == 2.1){
     background(160, 192, 255);
     frame('blue');
@@ -119,6 +127,7 @@ function draw(){
       stage = 2.2;
     }
   }
+  // ステージ2.2: メイン
   if(stage == 2.2){
     count1 = count1 + speed;
     count2 = count2 + speed;
@@ -141,6 +150,7 @@ function draw(){
       stage = 2.3
     }
   }
+  // ステージ2.3: 終盤
   if(stage == 2.3){
     background(160, 192, 255);
     frame('blue');
@@ -160,6 +170,7 @@ function draw(){
       }
     }
   }
+  // ステージ3.0: 結果を図示
   if(stage == 3.0){
     background(160, 192, 255);
     for(let i = 0; i < 12; i++){
@@ -186,7 +197,6 @@ function draw(){
     }
     let highest = 0;
     let highcl = [];
-    console.log(point);
     for(let i = 0; i < 12; i++){
       if(highest < point[i]){
         highest = point[i];
@@ -197,8 +207,6 @@ function draw(){
         highcl.push(i);
       }
     }
-    console.log(highest);
-    console.log(highcl.length);
     if(highcl.length == 1){
       let highcl_no = highcl[0];
       let content = 'あなたのオススメクラスタは' + cl[highcl_no] + 'です！';
@@ -218,6 +226,7 @@ function draw(){
   }
 }
 
+// 色を指定して枠を描く関数
 function frame(linecolor){
   stroke(linecolor);
   line(centx - 450, centy, centx + 450, centy);
@@ -226,6 +235,7 @@ function frame(linecolor){
   line(centx - 450, centy + 250, centx - 450, centy);
 }
 
+// ステージごとの説明を表示する関数
 function explanation(){
   if(stage == 1.0){
     fill('red');
@@ -253,21 +263,14 @@ function explanation(){
     text('次は，受けた授業のうち，面白かった授業が青の枠内に来たらスペースを押してください。', centx, 50);
   }
   if(stage == 3.0){
-    // let list;
-    // for(i = 0; i < 1; i++){
-    //   list = [];
-    //   for(j = 0; j < 12; j++){
-    //     list.push(i + 1);
-    //   }
-    //   regularPolygon(centx, centy, 50, list, 'black');
-    // }
-    regularPolygon(centx, centy, 50, [1,1,1,1,1,1,1,1,1,1,1,1], 'black');
-    regularPolygon(centx, centy, 50, [2,2,2,2,2,2,2,2,2,2,2,2], 'black');
-    regularPolygon(centx, centy, 50, [3,3,3,3,3,3,3,3,3,3,3,3], 'black');
-    regularPolygon(centx, centy, 50, [4,4,4,4,4,4,4,4,4,4,4,4], 'black');
-    regularPolygon(centx, centy, 50, [5,5,5,5,5,5,5,5,5,5,5,5], 'black');
-    regularPolygon(centx, centy, 50, [6,6,6,6,6,6,6,6,6,6,6,6], 'black');
-
+    let list;
+    for(i = 0; i < 6; i++){
+      list = [];
+      for(j = 0; j < 12; j++){
+        list.push(i + 1);
+      }
+      regularPolygon(centx, centy, 50, list, 'black');
+    }
     let x;
     let y;
     for(i = 0; i < 12; i++){
@@ -284,6 +287,7 @@ function explanation(){
   }
 }
 
+// 1つ目のボックスを描画する関数
 function box1(n, textcolor){
   let hyoji;
   fill('white');
@@ -303,6 +307,7 @@ function box1(n, textcolor){
   text(hyoji, centx, count1 + 100);
 }
 
+// 2つ目のボックスを描画する関数
 function box2(n, textcolor){
   let hyoji;
   fill('white');
@@ -322,6 +327,7 @@ function box2(n, textcolor){
   text(hyoji, centx, count2 + 100);
 }
 
+// キーボードが押された時の処理を行う関数
 function keyPressed(){
   if(keyCode == ' '.charCodeAt(0)){
     if(stage == 1.1 || stage == 1.2 || stage == 1.3){
@@ -361,8 +367,9 @@ function keyPressed(){
   }
 }
 
+// スペースが押されたときにリストへプッシュする関数
 function space_push(a, b, c){
-  // a : ステージ（整数値）, b : i1 or i2, c : i1かi2かの指標
+  // a : ステージ(整数値), b : i1 or i2, c : i1かi2かの指標
   let color;
   let n;
   if(a == 1){
@@ -395,11 +402,12 @@ function space_push(a, b, c){
   }
 }
 
+// 正多角形を描く関数(最後に正十二角形を描くときに使う)
 function regularPolygon(cx, cy, r, list, color){
   let n = list.length;
   let newlist = [];
   for(i = 0; i < n; i++){
-    newlist.push(list[i] * 50);
+    newlist.push(list[i] * r);
   }
   for(i = 0; i < n; i++){
     let theta = TWO_PI * i * 1 / n - HALF_PI;
@@ -421,7 +429,7 @@ function regularPolygon(cx, cy, r, list, color){
   }
 }
 
-// 講義科目のリストアップ
+// 講義科目をリストアップする関数(たいへん)
 function listup(){
   leclist = ['日本社会文化論', '日本思想文化論', '日本文化交流論','日本メディア文化論', '日本歴史文化論', '東アジア政治社会論', 'オセアニア社会文化論', '北アジア歴史社会論', '東南アジア社会文化論', '東南アジア政治文化論', '環大西洋文化論', 'アメリカ社会論', 'アメリカ文化論', '英米テクスト文化論', '宗教文化論', 'ヨーロッパ社会文化論', '文化人類学', '現代社会人類学', '現代民族誌学', '比較民族学', '文化混交論', '越境文化形成論', '科学技術文明論', '比較文化論', '文化翻訳論', '越境社会文化論', '国際関係論', '多文化政治社会論', '比較政策論', '比較政治社会論', '平和構築論', '近現代社会思想論', '近現代文化言説論', '近現代表象文化論', '近現代経済思想論', '近現代政治思想論', '現代社会理論', 'グローバル正義論', 'ジェンダー社会文化論', 'メディア社会文化論', '現代規範論', '文化政策論', '近現代アート論', '芸術文化表象論', '視覚文化論', '表象文化形成論', '芸術文化環境論', '第二言語習得論', '言語機能論', 'コミュニケーション表現論', '翻訳コミュニケーション論', 'グローバル・イングリッシュ・ヒストリー', '非言語コミュニケーション論', '音声コミュニケーション論', 'コミュニケーション構造論', 'コミュニケーション比較論', '認知コミュニケーション論', '現代IT入門', 'ITコミュニケーションデザイン', '社会システム科学', 'データマネージメント', '統計情報処理'];
   // 2022年度の担当教員/2021年度の担当教員
@@ -440,6 +448,7 @@ function listup(){
     redlist.push(0);
     bluelist.push(0);  
   }
+  // クラスタの名前のリスト
   cl = ['日本学', 'ｱｼﾞｱ・太平洋文化論', 'ﾖｰﾛｯﾊﾟ・ｱﾒﾘｶ文化論', '異文化関係論', '多文化共生論', '越境文化論', 'ﾓﾀﾞﾆﾃｨ論', '芸術文化論', '先端社会論', '言語ｺﾐｭﾆｹｰｼｮﾝ論', '感性ｺﾐｭﾆｹｰｼｮﾝ論', '情報ｺﾐｭﾆｹｰｼｮﾝ論'];
 }
 
