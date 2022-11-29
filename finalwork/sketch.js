@@ -147,7 +147,7 @@ function draw(){
     box1(i1, textcolor1);
     box2(i2, textcolor2);
     if(i1 * 2 >= takenlec.length || i2 * 2 + 1 >= takenlec.length){
-      stage = 2.3
+      stage = 2.3;
     }
   }
   // ステージ2.3: 終盤
@@ -263,14 +263,20 @@ function explanation(){
     text('次は，受けた授業のうち，面白かった授業が青の枠内に来たらスペースを押してください。', centx, 50);
   }
   if(stage == 3.0){
-    let list;
-    for(i = 0; i < 6; i++){
-      list = [];
-      for(j = 0; j < 12; j++){
-        list.push(i + 1);
-      }
-      regularPolygon(centx, centy, 50, list, 'black');
-    }
+    // let list;
+    // for(i = 0; i < 6; i++){
+    //   list = [];
+    //   for(j = 0; j < 12; j++){
+    //     list.push(i + 1);
+    //   }
+    //   regularPolygon(centx, centy, 50, list, 'black');
+    // }
+    // 上のコードが上手く行かないので差し替え
+    regularPolygon(centx, centy, 50, [1,1,1,1,1,1,1,1,1,1,1,1], 'black');
+    regularPolygon(centx, centy, 50, [2,2,2,2,2,2,2,2,2,2,2,2], 'black');
+    regularPolygon(centx, centy, 50, [3,3,3,3,3,3,3,3,3,3,3,3], 'black');
+    regularPolygon(centx, centy, 50, [4,4,4,4,4,4,4,4,4,4,4,4], 'black');
+    regularPolygon(centx, centy, 50, [5,5,5,5,5,5,5,5,5,5,5,5], 'black');
     let x;
     let y;
     for(i = 0; i < 12; i++){
