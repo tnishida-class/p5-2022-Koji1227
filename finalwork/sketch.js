@@ -37,7 +37,7 @@ function setup(){
   centy = height / 2;
   count1 = 0;
   count2 = 0;
-  speed = 3; // 落ちてくるスピードを調整
+  speed = 4; // 落ちてくるスピードを調整
   i1 = 0;
   i2 = 0;
   textcolor1 = 'black';
@@ -217,7 +217,7 @@ function draw(){
     else {
       textAlign(CENTER);
       textSize(25);
-      text('あなたはバランス型です！', centx, 20);
+      text('あなたはバランス型です！', centx, 40);
     }
 
     explanation();
