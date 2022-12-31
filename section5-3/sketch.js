@@ -1,7 +1,7 @@
 // テキスト「関数を作る(2) 結果を戻す関数」～「総仕上げ：カレンダーを描画しよう」
 function setup(){
-  createCanvas(200, 200);
-  calendar(2019, 10);
+  createCanvas(300, 30);
+  calendar(2023, 1);
 
   // isLeapYear の動作確認のため console に出力しています
   for(let i = 2000; i <= 2100; i++){
@@ -16,8 +16,27 @@ function setup(){
 
 function calendar(y, m){
   let dow = dayOfWeek(y, m, 1);
+  textSize(14);
+  textAlign(CENTER);
+  const w = 40;
+  const h = 30;
+  let count = 1;
+  text('SUN', w * 1, h);
+  text('MON', w * 2, h);
+  text('TUE', w * 3, h);
+  text('WED', w * 4, h);
+  text('THU', w * 5, h);
+  text('FRI', w * 6, h);
+  text('SAT', w * 7, h);
+
+  console.log(dayOfWeek(2023, 1, 1));
+
   for(let d = 1; d <= daysInMonth(y, m); d++){
-    // BLANK[3] (hint: まずは daysInYear, dayOfWeek を作ろう)
+  // BLANK[3] (hint: まずは daysInYear, dayOfWeek を作ろう)
+    text(d, w * ((dayOfWeek(y, m, d)) + 1), h * (count + 1))
+    if(dayOfWeek(y, m, d) == 6){
+      count += 1;
+    }
   }
 }
 
@@ -27,11 +46,7 @@ function isLeapYear(y){
 
 function daysInYear(y){
   // BLANK[1]
-  if(isLeapYear(y) == TRUE){
-    return(366);
-  } else {
-    return(365);
-  }
+  return isLeapYear(y) ? 366 : 365;
 }
 
 function daysInMonth(y, m){
@@ -56,6 +71,13 @@ function dayOfYear(y, m, d){
 
 function dayOfWeek(y, m, d){
   // BLANK[2]
+  let count = 0;
+  for(i = 1970; i < y; i++){
+    count += daysInYear(i);
+  }
+  count += dayOfYear(y, m, d);
+  // 1970年1月1日は木曜日(= 4)
+  return (count + 3) % 7
 }
 
 function dayOfWeekAsString(dow){
