@@ -31,6 +31,7 @@ function calendar(y, m){
 
   console.log(dayOfWeek(2023, 1, 1));
 
+  // ここはなぜか上手く動きません
   for(let d = 1; d <= daysInMonth(y, m); d++){
   // BLANK[3] (hint: まずは daysInYear, dayOfWeek を作ろう)
     text(d, w * ((dayOfWeek(y, m, d)) + 1), h * (count + 1))
