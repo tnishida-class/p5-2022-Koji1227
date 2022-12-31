@@ -1,7 +1,7 @@
 // テキスト「関数を作る(2) 結果を戻す関数」～「総仕上げ：カレンダーを描画しよう」
 function setup(){
   createCanvas(300, 300);
-  calendar(2023, 2);
+  calendar(2023, 1);
 
   // isLeapYear の動作確認のため console に出力しています
   for(let i = 2000; i <= 2100; i++){
