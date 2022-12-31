@@ -1,7 +1,7 @@
 // テキスト「関数を作る(2) 結果を戻す関数」～「総仕上げ：カレンダーを描画しよう」
 function setup(){
-  createCanvas(300, 30);
-  calendar(2023, 1);
+  createCanvas(300, 300);
+  calendar(2023, 2);
 
   // isLeapYear の動作確認のため console に出力しています
   for(let i = 2000; i <= 2100; i++){
@@ -21,23 +21,34 @@ function calendar(y, m){
   const w = 40;
   const h = 30;
   let count = 1;
-  text('SUN', w * 1, h);
-  text('MON', w * 2, h);
-  text('TUE', w * 3, h);
-  text('WED', w * 4, h);
-  text('THU', w * 5, h);
-  text('FRI', w * 6, h);
-  text('SAT', w * 7, h);
+  text(y + "年" + m + "月", w * 4, h)
+  fill('red');
+  text('SUN', w * 1, h * 2);
+  fill('black');
+  text('MON', w * 2, h * 2);
+  text('TUE', w * 3, h * 2);
+  text('WED', w * 4, h * 2);
+  text('THU', w * 5, h * 2);
+  text('FRI', w * 6, h * 2);
+  fill('blue');
+  text('SAT', w * 7, h * 2);
 
-  console.log(dayOfWeek(2023, 1, 1));
-
-  // ここはなぜか上手く動きません
   for(let d = 1; d <= daysInMonth(y, m); d++){
   // BLANK[3] (hint: まずは daysInYear, dayOfWeek を作ろう)
-    text(d, w * ((dayOfWeek(y, m, d)) + 1), h * (count + 1))
+    if(dayOfWeek(y, m, d) == 0){
+      fill('red'); // 日曜日は赤色
+    }
+    else if(dayOfWeek(y, m, d) == 6){
+      fill('blue'); // 土曜日は青色
+    }
+    else {
+      fill('black'); // その他は黒色
+    }
+    text(d, w * ((dayOfWeek(y, m, d)) + 1), h * (count + 2));
     if(dayOfWeek(y, m, d) == 6){
       count += 1;
     }
+    fill('black'); // 一応黒色に戻しておく
   }
 }
 
