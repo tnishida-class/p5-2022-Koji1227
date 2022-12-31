@@ -35,12 +35,3 @@ function setup(){
     py = new_py;
   }
 }
-
-// function draw(){
-//   console.log(mouseX, mouseY);
-//   for(let i = 0; i < scores.length; i++){
-//     if(dx * (i + 0.5) - 5 < mouseX && mouseX < dx * (i + 0.5) + 5 && ( 100 - scores[i]) / 100 * height - 5 < mouseY && mouseY < ( 100 - scores[i]) / 100 * height + 5){
-//       text(scores[i], dx * (i + 0.5), ( 100 - scores[i]) / 100 * height + 10);
-//     }
-//   }
-// }
