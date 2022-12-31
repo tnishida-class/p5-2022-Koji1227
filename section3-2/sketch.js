@@ -31,6 +31,8 @@ function draw(){
   if(y > height){ vy = -1 * vy; }
   x = constrain(x, 0, width);
   y = constrain(y, 0, height);
+
+  if(keyIsDown(" ".charCodeAt(0))){ vy -= 2; }
 }
 
 function windowResized(){
